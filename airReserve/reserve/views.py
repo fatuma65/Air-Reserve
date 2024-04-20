@@ -11,6 +11,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAdminUser
+from django.contrib.auth.models import User
+from rest_framework.authtoken.views import ObtainAuthToken
+
 
 # Create your views here.
 class BookingApiView(APIView):
@@ -123,4 +127,45 @@ class UserLogoutView(APIView):
         token = Token.objects.get(user=request.user)
         token.delete()
         return Response({'success': True, 'detail':'Logged out'}, status=status.HTTP_200_OK)
+    
+
+# admin shuld be able to create flights
+class AdminFlightsView(APIView):
+    permission_classes = [IsAdminUser]
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, request, *args, **kwargs):
+        serializer = FlightSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({"message":"Flight successfully created"}, status=status.HTTP_201_CREATED)
+        return Response({'error': serializer.errors})
+        
+
+class LoginView(ObtainAuthToken):
+    serializer_class = UserLoginSerializer  
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        user = authenticate(username=username, password=password)
+
+        print(user)
+        
+        # Check if the user is found
+        if not user:
+            return Response({'error': 'User not found'}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Generate token for the authenticated user
+        token, created = Token.objects.get_or_create(user=user)
+
+        response = {
+            'success':True,
+            'id': user.id,
+            'token': token.key
+        }
+        return Response(response, status=status.HTTP_200_OK)
     
