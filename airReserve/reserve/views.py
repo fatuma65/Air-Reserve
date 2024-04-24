@@ -1,4 +1,3 @@
-from django.shortcuts import  get_object_or_404
 from django.contrib.auth import authenticate
 from reserve.models import Booking, Flight
 from reserve.serializers import FlightSerializer, BookingSerializer, UserLoginSerializer, UserRegisterSerializer
@@ -11,6 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import get_object_or_404
+
 
 # Create your views here.
 class BookingApiView(APIView):
@@ -51,17 +53,19 @@ class BookingApiView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 class CancelBooking(APIView):
 
     def delete(self, request, id, *args, **kwargs):
-        booking = get_object_or_404(Booking, id=id)
-        if booking.user:
+        user = request.user.id
+        booking = Booking.objects.filter(user=user, id=id)
+        if booking:
             booking.delete()
             return Response({'message': 'Your booking is deleted successfully'}, status=status.HTTP_200_OK)
-        return Response({'error': 'Booking not found'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Booking not found'}, status=status.HTTP_400_BAD_REQUEST)
 
     
 # get all flights

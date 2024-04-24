@@ -16,14 +16,10 @@ class FlightSerializer(serializers.ModelSerializer):
 
 
 class BookingSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
-
-    seat_number = serializers.IntegerField()
-    
     class Meta:
         model = Booking
-        fields = ('id', 'user', 'flight', 'seat_number')
+        fields = '__all__'
+        # fields = ('id', 'user', 'flight', 'seat_number')
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
