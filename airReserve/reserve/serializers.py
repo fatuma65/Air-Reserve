@@ -17,8 +17,6 @@ class FlightSerializer(serializers.ModelSerializer):
 
 class BookingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    # user = serializers.ForeignKey(User, on_delete=serializers.CASCADE)
-    # flight = serializers.ForeignKey(Flight, on_delete=serializers.CASCADE)
     flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
 
     seat_number = serializers.IntegerField()
@@ -29,12 +27,8 @@ class BookingSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
-    # id = serializers.PrimaryKeyRelatedField(read_only=True)
     username = serializers.CharField()
-    # username = serializers.CharField(read_only=True)
     password = serializers.CharField()
-    # password = serializers.CharField(write_only=True)
-
     class Meta:
         model = User
         fields = ["username", "password"]
