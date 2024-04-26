@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
 from reserve.models import Booking, Flight
 from reserve.serializers import FlightSerializer, BookingSerializer, UserLoginSerializer, UserRegisterSerializer
 from reserve.serializers import FlightSerializer
@@ -8,7 +9,6 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
 
 # Create your views here.
 class BookingApiView(APIView):
@@ -70,6 +70,14 @@ class FlightView(APIView):
         serializer = FlightSerializer(flights, many=True)
         return Response({'flights': serializer.data}, status=status.HTTP_200_OK)
     
+# get a specific flight
+
+class FlightDetailView(APIView):
+    def get(self, request, id):
+        flight = get_object_or_404(Flight, id=id)
+        serializer = FlightSerializer(flight)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 # login a user
 class LoginView(APIView):
     permission_classes = (AllowAny,)
