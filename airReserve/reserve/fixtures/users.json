@@ -1,0 +1,29 @@
+[
+    {
+        "model": "auth.user",
+        "id": 11,
+        "fields": {
+            "first_name": "Nantongo",
+            "last_name":"betty",
+            "username":"betty",
+            "email": "nantongo@gmail.com",
+            "password": "pbkdf2_sha256$720000$JNZdNCAc0aWRBOffd2y60W$Oy10aWhXAm8kJaaEFAmpCvaSndRSpIOH3L+e15BKvdE=",
+            "date_joined": "2024-04-17 12:54:43.257972+03",
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "auth.user",
+        "id": 10,
+        "fields": {
+            "first_name": "Arinda",
+            "last_name": "ronald",
+            "email": "arinda@gmail.com",
+            "password": "pbkdf2_sha256$720000$5XVuUVtjubyzRyCsTRaegH$GyIWZOMSv5OcNGeuSnyWFYejyTDDaTyrupcJMLy85qs=",
+            "date_joined": "2024-04-16 16:37:09.187989+03",
+            "is_active": true,
+            "is_superuser": false
+        }
+    }
+]
