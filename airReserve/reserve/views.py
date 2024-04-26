@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 
 # Create your views here.
 class BookingApiView(APIView):
@@ -18,8 +19,9 @@ class BookingApiView(APIView):
 
     # get all bookings of a specific user
     def get(self, request):
-
         user = request.user
+        print(user.id)
+
         # list all flight bookings for a specific user
         bookings = Booking.objects.filter(user=user)
         serializer = BookingSerializer(bookings, many=True)
@@ -27,30 +29,26 @@ class BookingApiView(APIView):
 
     #  booking a seat on a flight
     def post(self, request):
-        
-        # get a flight by id
-        flight_id = request.data.get('flight')
+        user_id = request.user.id
 
-        # check if flight exists and available
+        flight_id = request.data.get('flight')
+        seat_number = request.data.get('seat_number')
+
         try:
             flight = Flight.objects.get(id=flight_id)
         except Flight.DoesNotExist:
-            return Response({'error':'Flight not available'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error':'flight not found'}, status=status.HTTP_404_NOT_FOUND)
 
         if flight.available_seats > 0:
-
-            data = {
-                'user': request.user.id,
-                'flight': request.data.get('flight'),
-                'seat_number': request.data.get('seat_number')
-            }
             flight.available_seats -= 1
             flight.save()
-
+            data = {'user':user_id, 'flight':flight_id, 'seat_number':seat_number}
             serializer = BookingSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({'message':'flight booked successfully'}, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
@@ -90,8 +88,7 @@ class LoginView(APIView):
                 token, created = Token.objects.get_or_create(user=user)
                 response = {
                     'success':True,
-                    'username': user.username,
-                    'email':user.email,
+                    'user_id':user.id,
                     'token':token.key
                 }
 
