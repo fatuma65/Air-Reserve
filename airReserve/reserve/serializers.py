@@ -25,7 +25,6 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = '__all__'
 
-
 class UserLoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
     password = serializers.CharField()

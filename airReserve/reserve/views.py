@@ -1,4 +1,3 @@
-from django.shortcuts import  get_object_or_404
 from django.contrib.auth import authenticate
 from reserve.models import Booking, Flight
 from reserve.serializers import FlightSerializer, BookingSerializer, UserLoginSerializer, UserRegisterSerializer
@@ -53,11 +52,13 @@ class BookingApiView(APIView):
 class CancelBooking(APIView):
 
     def delete(self, request, id, *args, **kwargs):
-        booking = get_object_or_404(Booking, id=id)
-        if booking.user:
+        user = request.user.id
+        booking = Booking.objects.filter(user=user, id=id)
+        if booking:
             booking.delete()
             return Response({'message': 'Your booking is deleted successfully'}, status=status.HTTP_200_OK)
-        return Response({'error': 'Booking not found'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Booking not found'}, status=status.HTTP_400_BAD_REQUEST)
 
     
 # get all flights
@@ -90,9 +91,8 @@ class LoginView(APIView):
                     'token':token.key
                 }
 
-                return Response(response, status=status.HTTP_200_OK,)
-      
-        return Response({'error' : 'User not found'}, status=status.HTTP_400_BAD_REQUEST,)
+                return Response(response, status=status.HTTP_200_OK)
+        return Response({'error' : 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
 
 # registering a new user 
 class UserRegisterView(APIView):
