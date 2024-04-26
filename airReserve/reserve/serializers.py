@@ -31,7 +31,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
     password = serializers.CharField()
     class Meta:
         model = User
-        fields = ["username", "password"]
+        fields = ["id","username", "password"]
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     authentication_classes = [TokenAuthentication]
