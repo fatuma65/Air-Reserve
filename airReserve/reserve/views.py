@@ -11,8 +11,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.generics import get_object_or_404
-
 
 # Create your views here.
 class BookingApiView(APIView):
@@ -99,9 +97,8 @@ class LoginView(APIView):
                     'token':token.key
                 }
 
-                return Response(response, status=status.HTTP_200_OK,)
-      
-        return Response({'error' : 'User not found'}, status=status.HTTP_400_BAD_REQUEST,)
+                return Response(response, status=status.HTTP_200_OK)
+        return Response({'error' : 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
 
 # registering a new user 
 class UserRegisterView(APIView):

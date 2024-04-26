@@ -19,8 +19,6 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = '__all__'
-        # fields = ('id', 'user', 'flight', 'seat_number')
-
 
 class UserLoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
