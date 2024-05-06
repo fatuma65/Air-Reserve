@@ -12,8 +12,6 @@ class FlightSerializer(serializers.ModelSerializer):
     class Meta:
         model = Flight
         fields = ('id', 'depature_time', 'destination', 'available_seats')
-
-
 class BookingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
