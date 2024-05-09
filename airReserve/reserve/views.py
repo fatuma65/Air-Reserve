@@ -76,7 +76,6 @@ class FlightView(APIView):
         return Response({'flights': serializer.data}, status=status.HTTP_200_OK)
     
 # get a specific flight
-
 class FlightDetailView(APIView):
     def get(self, request, id):
         flight = get_object_or_404(Flight, id=id)
@@ -132,10 +131,8 @@ class UserLogoutView(APIView):
         token.delete()
         return Response({'success': True, 'detail':'Logged out'}, status=status.HTTP_200_OK)
     
-
 # admin shuld be able to create flights
 class AdminFlightsView(APIView):
-
     def post(self, request, *args, **kwargs):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
