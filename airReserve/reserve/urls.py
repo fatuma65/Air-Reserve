@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views
-from .views import BookingApiView, LoginView, FlightView, UserLogoutView, UserRegisterView, CancelBooking,  AdminFlightsView
+from .views import BookingApiView, LoginView, FlightView, UserLogoutView, UserRegisterView, CancelBooking,  AdminFlightsView, ListBookingView
 
 urlpatterns = [
-    path('bookings/', BookingApiView.as_view(), name='bookings'),
+    path('bookings/', ListBookingView.as_view(), name='get_bookings'),
+    path('create/booking/<int:id>/', BookingApiView.as_view(), name='book_flights'),
     path('auth/login/', LoginView.as_view(), name='login'),
     path('auth/register/', UserRegisterView.as_view(), name='register'),
     path('auth/logout/', UserLogoutView.as_view(), name='logout'),

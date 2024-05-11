@@ -1,11 +1,20 @@
 [
     {
         "model": "reserve.Flight",
-        "id": 6,
+        "id": 1,
         "fields": {
-            "depature_time": "2024-04-13 21:00:00+03",
-            "destination": "New Jersey",
-            "available_seats":20
+            "depature_time": "2024-05-03 03:00:00+03",
+            "destination": "Canada",
+            "available_seats":199
+        }
+    },
+    {
+        "model": "reserve.Flight",
+        "id": 2,
+        "fields": {
+            "depature_time": "2024-05-03 09:00:00+03",
+            "destination": "Germany",
+            "available_seats":99
         }
     }
 ]

@@ -1,27 +1,28 @@
 [
     {
         "model": "auth.user",
-        "id": 11,
+        "id": 1,
+        "fields": {
+            "first_name": "",
+            "last_name": "",
+            "email": "namalefatuma13@gmail.com",
+            "username":"cathy",
+            "password": "pbkdf2_sha256$720000$EyRQ6B0KMZ7eHOswQFruBr$tXWu2vjdmViuEO9v/dgpeEubynL3UUQkTWHxrxLI5qY=",
+            "date_joined": "2024-05-03 21:31:41.78116+03",
+            "is_active": true,
+            "is_superuser": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "id": 2,
         "fields": {
             "first_name": "Nantongo",
             "last_name":"betty",
             "username":"betty",
             "email": "nantongo@gmail.com",
-            "password": "pbkdf2_sha256$720000$JNZdNCAc0aWRBOffd2y60W$Oy10aWhXAm8kJaaEFAmpCvaSndRSpIOH3L+e15BKvdE=",
-            "date_joined": "2024-04-17 12:54:43.257972+03",
-            "is_active": true,
-            "is_superuser": false
-        }
-    },
-    {
-        "model": "auth.user",
-        "id": 10,
-        "fields": {
-            "first_name": "Arinda",
-            "last_name": "ronald",
-            "email": "arinda@gmail.com",
-            "password": "pbkdf2_sha256$720000$5XVuUVtjubyzRyCsTRaegH$GyIWZOMSv5OcNGeuSnyWFYejyTDDaTyrupcJMLy85qs=",
-            "date_joined": "2024-04-16 16:37:09.187989+03",
+            "password": "pbkdf2_sha256$720000$wbTXzpxnB8J0Gh52EjEuC2$pLU1KyuL30w4VCXdMuVOsfDGjIvTJ+IHgUhL6qLjBd4=",
+            "date_joined": "2024-05-03 21:34:44.824663+03",
             "is_active": true,
             "is_superuser": false
         }

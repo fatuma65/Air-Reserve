@@ -15,7 +15,6 @@ class FlightSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
-
     seat_number = serializers.IntegerField()
     
     class Meta:
@@ -27,14 +26,13 @@ class UserLoginSerializer(serializers.ModelSerializer):
     password = serializers.CharField()
     class Meta:
         model = User
-        fields = ["id","username", "password"]
+        fields = ["id", "username", "password"]
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     authentication_classes = [TokenAuthentication]
 
     id = serializers.PrimaryKeyRelatedField(read_only=True)
     username = serializers.CharField()
-    password = serializers.CharField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.EmailField()
