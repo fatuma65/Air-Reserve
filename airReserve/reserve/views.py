@@ -16,10 +16,8 @@ class BookingApiView(APIView):
     #  booking a seat on a flight
     def post(self, request, id):
         data = {}
-        print(id)
         try:
             flight = Flight.objects.get(id=id)
-            print(flight)
         except Flight.DoesNotExist:
             return Response({'error':'flight not found'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -45,9 +43,7 @@ class ListBookingView(ListAPIView):
         user = request.user.id
         # list all flight bookings for a specific user
         bookings = Booking.objects.filter(user=user)
-        print(bookings)
         serializer = self.get_serializer(bookings, many=True)
-        print('---------bookings-----', serializer.data)
         if serializer is not None:
             return Response({'data': serializer.data, 'success': True})
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
@@ -56,15 +52,12 @@ class CancelBooking(APIView):
 
     def delete(self, request, id, *args, **kwargs):
         user = request.user
-        print('this is the user to delete the booking',user)
         booking = Booking.objects.filter(user=user, id=id)
-        print(booking)
         if booking is not None:
             booking.delete()
             return Response({'message': 'Your booking is deleted successfully'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Booking not found'}, status=status.HTTP_404_NOT_FOUND)
-
     
 # get all flights
 class FlightView(APIView):

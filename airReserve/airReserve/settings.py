@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
@@ -56,8 +55,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# The default port for create-react-app
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:5173',  # The default port for create-react-app
+     'http://localhost:5173',  
 ]
 ROOT_URLCONF = 'airReserve.urls'
 
@@ -93,12 +94,6 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT')
     }
 }
-print(DATABASES)
-
-print(DATABASES)
-
-print(DATABASES)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

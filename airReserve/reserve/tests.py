@@ -68,7 +68,6 @@ class ListBookingsTestClass(BaseTestClass):
 
         url = '/create/booking/10/'
         url_param = '/bookings/'
-        print(url_param)
         self.client.post(
             url, 
             data={"seat_number":7},
@@ -94,8 +93,6 @@ class CancelBookingTestCase(BaseTestClass):
         url_h = '/create/booking/6/'
         url_b = '/bookings/'
         url = '/cancel/2/'
-
-        print(url_b)
 
         self.client.post(
             url_h, 
